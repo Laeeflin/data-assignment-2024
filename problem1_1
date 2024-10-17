@@ -1,0 +1,13 @@
+#The problem no1
+#Query to find the top 10 partners by sales
+
+SELECT
+  resq_provider AS partner
+  SUM(order_amount) AS total_sales
+FROM
+  table
+GROUP BY
+  partner
+ORDER BY
+  total_sales DESC
+LIMIT 10;
