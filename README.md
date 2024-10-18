@@ -1,5 +1,4 @@
 # data-assignment-2024
-# data-assignment-2024
 
 **The problem #1**
 
