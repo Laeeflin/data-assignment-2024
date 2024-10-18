@@ -1,9 +1,11 @@
+# The problem no2
+# The marketing team wants to know how much can they spend on acquiring new customers to the platform. Therefore, they need to know how valuable an average customer is to us during their whole expected lifetime on the platform. Use the newly created presentation table and perform data analysis about Customer Lifetime Value (CLV).
+
 # Import necessary libraries
 import pandas as pd
 import numpy as np
 
 # Load the presentation_table data
-# Assuming we have a CSV or database query output loaded into a DataFrame
 presentation_table = pd.read_csv('presentation_table.csv')
 
 # 1. Average Order Value (AOV)
@@ -26,8 +28,7 @@ presentation_table['order_date'] = pd.to_datetime(presentation_table['order_date
 # Group by customer_id and calculate the first and last order date for each customer
 customer_lifespan = presentation_table.groupby('customer_id').agg(
     first_order=('order_date', 'min'),
-    last_order=('order_date', 'max')
-)
+    last_order=('order_date', 'max'))
 
 # Calculate the lifespan in months (or days) as the difference between the first and last order date
 customer_lifespan['lifespan_days'] = (customer_lifespan['last_order'] - customer_lifespan['first_order']).dt.days
@@ -40,25 +41,6 @@ print(f"Average Customer Lifespan (T) in months: {average_customer_lifespan}")
 # CLV = AOV * F * T
 CLV = average_order_value * purchase_frequency * average_customer_lifespan
 print(f"Customer Lifetime Value (CLV): {CLV}")
-
-# Visualize the distribution of customer lifespans and order frequency using histograms
-import matplotlib.pyplot as plt
-
-# Plot customer lifespan distribution
-plt.figure(figsize=(10, 6))
-plt.hist(customer_lifespan['lifespan_days']/30.4, bins=20, color='skyblue')
-plt.title('Customer Lifespan Distribution (Months)')
-plt.xlabel('Lifespan (Months)')
-plt.ylabel('Number of Customers')
-plt.show()
-
-# Plot purchase frequency distribution
-plt.figure(figsize=(10, 6))
-plt.hist(customer_order_count, bins=20, color='salmon')
-plt.title('Purchase Frequency Distribution')
-plt.xlabel('Number of Orders')
-plt.ylabel('Number of Customers')
-plt.show()
 
 # Summary of results
 print(f"Summary of Customer Lifetime Value Analysis:")
